@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="first-div"></div>
+		<script>
+			var firstDiv = document.getElementById('first-div');
+			console.log(document.body.firstElementChild.nodeName);
+			
+			var myInput = document.getElementById("my-input");
+			
+			var proto = Object.create(HTMLElement.prototype);
+			proto.createdCallback = function(){
+				this.addEventListener('click', function(e) {
+				    alert('Thanks!');
+			  	});
+			};
+			proto.attachedCallback = function(){
+				
+			};
+			
+			var MyTag = document.registerElement(
+				'my-tag',
+				{
+					prototype:proto
+				}
+			);
+			var myTagElement = new MyTag();
+			document.body.appendChild(myTagElement);
+			var myTag = document.getElementsByTagName('my-tag')[0];
+			myTag.textContent = 'I am a my-tag element.';
+		</script>
+	</body>
+</html>
