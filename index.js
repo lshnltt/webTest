@@ -25,6 +25,34 @@ var products = [
 	}
 ];
 
+function getWheatherData(){
+	return {
+		locations:[
+			{
+				name: 'Portland',
+				forecastUrl: 'http://www.wunderground.com/US/OR/Portland.html',
+				iconUrl: 'http://www.wunderground.com/US/OR/Portland.html',
+				weather: 'Overcast',
+				temp: '54.1 F (12.3 C)'
+			},
+			{
+				name: 'Bend',
+				forecastUrl: 'http://www.wunderground.com/US/OR/Bend.html',
+				iconUrl: 'http://icons-ak.wxug.com/i/c/k/partlycloudy.gif',
+				weather: 'Partly Cloudy',
+				temp: '55.0 F (12.8 C)',
+			},
+			{
+				name: 'Manzanita',
+				forecastUrl: 'http://www.wunderground.com/US/OR/Manzanita.html',
+				iconUrl: 'http://icons-ak.wxug.com/i/c/k/rain.gif',
+				weather: 'Light Rain',
+				temp: '55.0 F (12.8 C)',
+			}
+		]
+	};
+};
+
 app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
 
@@ -77,11 +105,18 @@ app.put('/api/tour/:id', function(req, res){
 	}
 });
 
-app.get('/headers', function(req,res){
+app.get('/headers', function(req, res){
 	res.set('Content-Type','text/plain');
 	var s = '';
 	for(var name in req.headers) s += name + ': ' + req.headers[name] + '\n';
 	res.send(s);
+});
+
+app.use(function(req, res, next){
+	if(!res.locals.particals)res.locals.particals = {};
+	res.locals.particals.weather = getWheatherData();
+	console.log(res.locals.particals.weather);
+	next();
 });
 
 app.get('/', function(req, res){
