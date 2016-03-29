@@ -9,7 +9,9 @@
     "gulp": "^3.9.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "mocha": "^2.4.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
